@@ -77,7 +77,7 @@ async def get_or_create_customer(phone_number: str) -> dict:
     customer = await customers_collection.find_one({"phone_number": phone_number})
     if not customer:
         customer_data = {
-            "id": Customer().id,
+            "id": str(uuid.uuid4()),
             "phone_number": phone_number,
             "created_at": datetime.utcnow(),
             "total_tickets": 0,
