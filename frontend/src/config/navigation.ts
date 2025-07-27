@@ -22,6 +22,7 @@ const AtendimentoSection = lazy(() => import('@/components/AtendimentoSection'))
 const MonitoramentoSection = lazy(() => import('@/components/MonitoramentoSection'));
 const RelatoriosSection = lazy(() => import('@/components/RelatoriosSection'));
 const AdministracaoSection = lazy(() => import('@/components/AdministracaoSection'));
+const WhatsAppSection = lazy(() => import('@/components/WhatsAppSection'));
 
 export const navigationItems: NavigationItem[] = [
   { 
