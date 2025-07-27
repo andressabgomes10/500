@@ -156,15 +156,18 @@ frontend:
 
   - task: "Navegação WhatsApp"
     implemented: true
-    working: false
+    working: true
     file: "/app/frontend/src/config/navigation.ts"
     stuck_count: 0
     priority: "medium"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: false
         agent: "main"
         comment: "Adicionada seção WhatsApp na navegação do sistema. Precisa testar se aparece no menu"
+      - working: true
+        agent: "testing"
+        comment: "ISSUE FIXED: WhatsApp menu item was not appearing due to missing permissions. Added 'whatsapp' to rolePermissions for all user roles (admin, gestao, atendente). Menu item now appears correctly in sidebar with smartphone icon and 'WhatsApp Business' label. Navigation working perfectly."
 
 metadata:
   created_by: "main_agent"
