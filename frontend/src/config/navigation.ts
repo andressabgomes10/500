@@ -8,7 +8,8 @@ import {
   FileText, 
   Settings,
   BarChart3,
-  Shield
+  Shield,
+  Smartphone
 } from 'lucide-react';
 import { NavigationItem } from '@/types/navigation';
 
