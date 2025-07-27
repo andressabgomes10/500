@@ -16,7 +16,7 @@ import {
   AlertCircle,
   Send,
   Ticket,
-  Refresh
+  RefreshCw
 } from 'lucide-react';
 
 const WhatsAppSection = () => {
