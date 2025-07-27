@@ -75,6 +75,13 @@ export const navigationItems: NavigationItem[] = [
     component: RelatoriosSection
   },
   { 
+    id: 'whatsapp', 
+    label: 'WhatsApp Business', 
+    icon: Smartphone, 
+    description: 'Atendimento via WhatsApp',
+    component: WhatsAppSection
+  },
+  { 
     id: 'administracao', 
     label: 'Administração', 
     icon: Shield, 
