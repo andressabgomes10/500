@@ -1,0 +1,94 @@
+/* Estilos específicos para app */
+
+/* Safe area support para apps nativos */
+.pt-safe-top { 
+  padding-top: env(safe-area-inset-top, 0); 
+}
+
+.pb-safe-bottom { 
+  padding-bottom: env(safe-area-inset-bottom, 0); 
+}
+
+.pl-safe-left { 
+  padding-left: env(safe-area-inset-left, 0); 
+}
+
+.pr-safe-right { 
+  padding-right: env(safe-area-inset-right, 0); 
+}
+
+.px-safe-left { 
+  padding-left: env(safe-area-inset-left, 0); 
+}
+
+.px-safe-right { 
+  padding-right: env(safe-area-inset-right, 0); 
+}
+
+/* Suporte para touch em dispositivos móveis */
+.touch-manipulation {
+  touch-action: manipulation;
+}
+
+/* Scroll suave para apps */
+.scroll-smooth {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Otimizações para performance */
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
+/* PWA específico */
+@media (display-mode: standalone) {
+  body {
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  
+  /* Ocultar elementos específicos do browser em PWA */
+  .browser-only {
+    display: none !important;
+  }
+}
+
+/* Responsividade aprimorada */
+@media (max-width: 640px) {
+  .mobile-hidden {
+    display: none !important;
+  }
+  
+  .mobile-full-width {
+    width: 100% !important;
+  }
+}
+
+/* Alto contraste para acessibilidade */
+@media (prefers-contrast: high) {
+  .border {
+    border-width: 2px;
+  }
+}
+
+/* Redução de movimento para acessibilidade */
+@media (prefers-reduced-motion: reduce) {
+  .transition-all,
+  .transition-transform,
+  .transition-opacity {
+    transition: none !important;
+  }
+}
+
+/* Orientação específica */
+@media (orientation: landscape) and (max-height: 500px) {
+  .landscape-compact {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+}
