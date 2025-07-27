@@ -62,7 +62,12 @@ app.include_router(whatsapp_router)
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
-    allow_origins=["*"],
+    allow_origins=[
+        "http://localhost:3000",
+        "https://*.railway.app",
+        "https://*.emergentagent.com",
+        "*"  # Para desenvolvimento - remover em produção se necessário
+    ],
     allow_methods=["*"],
     allow_headers=["*"],
 )
