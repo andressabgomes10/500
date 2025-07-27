@@ -17,18 +17,15 @@ router = APIRouter(prefix="/api/whatsapp", tags=["whatsapp"])
 # URL do serviço WhatsApp (Node.js)
 WHATSAPP_SERVICE_URL = "http://localhost:3001"
 
-# Função para obter conexão do banco
-def get_db_connection():
-    mongo_url = os.environ.get('MONGO_URL', 'mongodb://localhost:27017')
-    db_name = os.environ.get('DB_NAME', 'test_database')
-    client = AsyncIOMotorClient(mongo_url)
-    return client[db_name]
+# MongoDB connection
+mongo_url = os.environ['MONGO_URL']
+client = AsyncIOMotorClient(mongo_url)
+db = client[os.environ['DB_NAME']]
 
 @router.post("/message", response_model=WhatsAppMessageResponse)
 async def handle_whatsapp_message(message_data: WhatsAppMessageCreate):
     """Processa mensagens recebidas do WhatsApp e gera respostas"""
     try:
-        db = get_db_connection()
         phone_number = message_data.phone_number
         message_text = message_data.message.strip()
         
@@ -70,7 +67,6 @@ async def handle_whatsapp_message(message_data: WhatsAppMessageCreate):
 
 async def get_or_create_customer(phone_number: str) -> dict:
     """Obtém cliente existente ou cria novo"""
-    db = get_db_connection()
     customers_collection = db.customers
     
     customer = await customers_collection.find_one({"phone_number": phone_number})
@@ -96,7 +92,6 @@ async def get_or_create_customer(phone_number: str) -> dict:
 
 async def process_customer_command(customer: dict, message_text: str) -> Optional[str]:
     """Processa comandos do cliente via WhatsApp"""
-    db = get_db_connection()
     
     # Comando para criar ticket: "suporte: problema com sistema"
     if message_text.startswith("suporte:"):
@@ -301,21 +296,18 @@ async def get_whatsapp_status():
 @router.get("/tickets", response_model=List[CustomerTicket])
 async def get_all_tickets():
     """Lista todos os tickets de suporte"""
-    db = get_db_connection()
     tickets = await db.tickets.find().sort("created_at", -1).limit(100).to_list(length=100)
     return [CustomerTicket(**ticket) for ticket in tickets]
 
 @router.get("/customers", response_model=List[Customer])
 async def get_all_customers():
     """Lista todos os clientes"""
-    db = get_db_connection()
     customers = await db.customers.find().sort("created_at", -1).limit(100).to_list(length=100)
     return [Customer(**customer) for customer in customers]
 
 @router.put("/tickets/{ticket_id}/status")
 async def update_ticket_status(ticket_id: str, status: str, assigned_agent: Optional[str] = None):
     """Atualiza status de um ticket"""
-    db = get_db_connection()
     update_data = {
         "status": status,
         "updated_at": datetime.utcnow()
