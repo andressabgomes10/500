@@ -109,7 +109,7 @@ Exemplo: *suporte: sistema não está funcionando*"""
         
         # Criar ticket
         ticket_data = {
-            "id": CustomerTicket().id,
+            "id": str(uuid.uuid4()),
             "customer_phone": customer["phone_number"],
             "subject": f"Suporte via WhatsApp - {datetime.now().strftime('%d/%m/%Y %H:%M')}",
             "description": description,
