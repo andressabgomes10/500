@@ -180,9 +180,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Testar componente WhatsApp no frontend"
-    - "Verificar se QR code aparece corretamente"
-    - "Testar funcionalidade completa WhatsApp"
+    - "WhatsApp Business integration complete and tested"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
