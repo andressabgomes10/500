@@ -17,9 +17,9 @@ export interface AuthState {
 }
 
 export const rolePermissions: Record<UserRole, string[]> = {
-  admin: ['dashboard', 'equipe', 'escalas', 'metas', 'atendimento', 'monitoramento', 'relatorios', 'administracao'],
-  gestao: ['dashboard', 'equipe', 'escalas', 'metas', 'monitoramento', 'relatorios'],
-  atendente: ['dashboard', 'atendimento']
+  admin: ['dashboard', 'equipe', 'escalas', 'metas', 'atendimento', 'monitoramento', 'relatorios', 'whatsapp', 'administracao'],
+  gestao: ['dashboard', 'equipe', 'escalas', 'metas', 'monitoramento', 'relatorios', 'whatsapp'],
+  atendente: ['dashboard', 'atendimento', 'whatsapp']
 };
 
 export const roleLabels: Record<UserRole, string> = {
