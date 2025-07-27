@@ -172,7 +172,7 @@ const WhatsAppSection = () => {
           </p>
         </div>
         <Button onClick={() => window.location.reload()} variant="outline">
-          <Refresh className="w-4 h-4 mr-2" />
+          <RefreshCw className="w-4 h-4 mr-2" />
           Atualizar
         </Button>
       </div>
