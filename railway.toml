@@ -1,6 +1,2 @@
-# Railway Configuration for Monorepo
 [build]
 builder = "dockerfile"
-
-[deploy]
-startCommand = "echo 'Deploy configured'"
