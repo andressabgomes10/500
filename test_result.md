@@ -198,7 +198,9 @@ metadata:
 
 test_plan:
   current_focus:
-    - "WhatsApp Business integration complete and tested"
+    - "WhatsApp Message Flow - End to End Testing"
+    - "Conexão MongoDB" 
+    - "Serviço Node.js WhatsApp"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
@@ -208,3 +210,5 @@ agent_communication:
     message: "Implementação da Fase 1 - WhatsApp Business concluída no backend. Serviço Node.js rodando na porta 3001, backend com endpoints funcionando. Frontend implementado mas precisa ser testado. Próximo passo: testar frontend e integração completa."
   - agent: "testing"
     message: "✅ WHATSAPP BUSINESS TESTING COMPLETE! Fixed critical permissions issue - WhatsApp menu item now appears correctly in sidebar. All components working: QR Code display, tabs navigation (Tickets/Clientes/Enviar), status card, and customer commands section. Integration with backend API successful. Ready for production use."
+  - agent: "main"
+    message: "🔧 CORREÇÃO DE AMBIENTE FORKED: Identificado e corrigido problema onde MongoDB estava configurado para Railway mas ambiente é local. Alterado para localhost:27017. Adicionado dotenv ao WhatsApp service e configurado FASTAPI_URL correta. Serviços agora comunicam corretamente. Precisa testar fluxo completo de mensagens."
