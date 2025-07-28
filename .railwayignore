@@ -1,0 +1,11 @@
+frontend/
+whatsapp-service/
+tests/
+*.md
+.git
+.env
+node_modules
+__pycache__
+*.pyc
+.vscode
+.DS_Store
