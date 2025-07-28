@@ -1,4 +1,4 @@
-# Dockerfile simples para Railway
+# Dockerfile otimizado para Railway
 FROM python:3.11-slim
 
 WORKDIR /app
@@ -13,8 +13,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copiar código do backend
 COPY backend/ .
 
-# Tornar script executável
-RUN chmod +x start.sh
-
-# Comando para iniciar
-CMD ["./start.sh"]
+# Usar comando direto (sem script bash)
+CMD ["sh", "-c", "uvicorn server:app --host 0.0.0.0 --port ${PORT:-8001}"]
