@@ -66,7 +66,9 @@ app.add_middleware(
         "http://localhost:3000",
         "https://*.railway.app",
         "https://*.emergentagent.com",
-        "*"  # Para desenvolvimento - remover em produção se necessário
+        "https://*.vercel.app",  # Adicionar Vercel
+        "https://andressabgomes10-500.vercel.app",  # Sua URL específica
+        "*"  # Para desenvolvimento
     ],
     allow_methods=["*"],
     allow_headers=["*"],
