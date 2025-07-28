@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Implementar integração WhatsApp Business para CRM com funcionalidades de atendimento via WhatsApp, criação de tickets e gerenciamento de clientes"
+user_problem_statement: "Implementar integração WhatsApp Business para CRM com funcionalidades de atendimento via WhatsApp, criação de tickets e gerenciamento de clientes. DEBUG: Mensagens enviadas para WhatsApp não aparecem no sistema CRM."
 
 backend:
   - task: "Modelos WhatsApp e Tickets"
@@ -129,17 +129,35 @@ backend:
         agent: "main"
         comment: "Implementadas rotas para processar mensagens, criar tickets, enviar mensagens e gerenciar QR code"
 
+  - task: "Conexão MongoDB"
+    implemented: true
+    working: true
+    file: "/app/backend/.env"
+    stuck_count: 1
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: false
+        agent: "main"
+        comment: "ERRO ENCONTRADO: MongoDB estava configurado para Railway (mongodb.railway.internal) mas ambiente local precisa de localhost"
+      - working: true
+        agent: "main"
+        comment: "CORREÇÃO APLICADA: Alterado MONGO_URL para mongodb://localhost:27017. Backend agora processa mensagens corretamente."
+
   - task: "Serviço Node.js WhatsApp"
     implemented: true
     working: true
     file: "/app/whatsapp-service/server.js"
-    stuck_count: 0
+    stuck_count: 1
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
       - working: true
         agent: "main"
         comment: "Serviço WhatsApp usando Baileys funcionando na porta 3001, gerando QR codes"
+      - working: true
+        agent: "main"
+        comment: "CORREÇÃO APLICADA: Adicionado dotenv e configurado FASTAPI_URL para ambiente local. Serviço pode comunicar com backend local."
 
 frontend:
   - task: "Componente WhatsApp Section"
