@@ -1,46 +1,19 @@
+# Railway Multi-Service Configuration
 [build]
-builder = "nixpacks"
+builder = "dockerfile"
 
 [deploy]
-restartPolicyType = "always"
+startCommand = "echo 'Multi-service app configured'"
 
-# Backend FastAPI Service
-[[services]]
-name = "backend"
-source = "backend"
-dockerfile = "backend/Dockerfile"
+# Definir cada serviço separadamente  
+[services.backend]
+source = "backend/"
+build.dockerfile = "backend/Dockerfile"
 
-[services.variables]
-PORT = "8001"
-MONGO_URL = "${{MongoDB.MONGO_URL}}"
-DB_NAME = "crm_production"
+[services.whatsapp]
+source = "whatsapp-service/"
+build.dockerfile = "whatsapp-service/Dockerfile"
 
-# WhatsApp Service
-[[services]]
-name = "whatsapp-service"  
-source = "whatsapp-service"
-dockerfile = "whatsapp-service/Dockerfile"
-
-[services.variables]
-PORT = "3001"
-FASTAPI_URL = "${{backend.RAILWAY_PRIVATE_DOMAIN}}"
-
-# Frontend React Service
-[[services]]
-name = "frontend"
-source = "frontend" 
-dockerfile = "frontend/Dockerfile"
-
-[services.variables]
-REACT_APP_BACKEND_URL = "${{backend.RAILWAY_PUBLIC_DOMAIN}}"
-PORT = "3000"
-
-# MongoDB Service
-[[services]]
-name = "mongodb"
-image = "mongo:5"
-
-[services.variables]
-MONGO_INITDB_ROOT_USERNAME = "admin"
-MONGO_INITDB_ROOT_PASSWORD = "${{shared.MONGO_PASSWORD}}"
-MONGO_URL = "mongodb://admin:${{shared.MONGO_PASSWORD}}@mongodb:27017"
+[services.frontend]
+source = "frontend/"
+build.dockerfile = "frontend/Dockerfile"
