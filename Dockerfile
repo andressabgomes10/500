@@ -16,5 +16,5 @@ COPY backend/ .
 # Debug - listar arquivos
 RUN ls -la
 
-# Comando simples
-CMD uvicorn server:app --host 0.0.0.0 --port $PORT --log-level debug
+# Comando com debug primeiro
+CMD python debug.py && uvicorn server:app --host 0.0.0.0 --port $PORT --log-level debug
