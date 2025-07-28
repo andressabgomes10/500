@@ -1,4 +1,4 @@
-# Dockerfile otimizado para Railway
+# Dockerfile super simples para Railway  
 FROM python:3.11-slim
 
 WORKDIR /app
@@ -6,12 +6,15 @@ WORKDIR /app
 # Instalar dependências do sistema
 RUN apt-get update && apt-get install -y gcc && rm -rf /var/lib/apt/lists/*
 
-# Copiar e instalar dependências Python
-COPY backend/requirements.txt requirements.txt
+# Copiar requirements e instalar
+COPY backend/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copiar código do backend
+# Copiar código
 COPY backend/ .
 
-# Usar comando direto (sem script bash)
-CMD ["sh", "-c", "uvicorn server:app --host 0.0.0.0 --port ${PORT:-8001}"]
+# Debug - listar arquivos
+RUN ls -la
+
+# Comando simples
+CMD uvicorn server:app --host 0.0.0.0 --port $PORT --log-level debug
