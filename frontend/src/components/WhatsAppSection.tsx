@@ -32,7 +32,7 @@ const WhatsAppSection = () => {
   const [customers, setCustomers] = useState([]);
   const [manualMessage, setManualMessage] = useState({ phone: '', message: '' });
 
-  const backendUrl = process.env.REACT_APP_BACKEND_URL || "https://de415330-cf94-4151-b727-d7cea73052a7.preview.emergentagent.com";
+  const backendUrl = process.env.REACT_APP_BACKEND_URL || "https://500-production-642e.up.railway.app";
 
   // Verificar status e QR code
   useEffect(() => {
