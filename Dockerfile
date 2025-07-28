@@ -13,5 +13,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copiar código do backend
 COPY backend/ .
 
-# Comando para iniciar
-CMD ["uvicorn", "server:app", "--host", "0.0.0.0", "--port", "$PORT"]
+# Comando para iniciar (Railway define $PORT automaticamente)
+CMD uvicorn server:app --host 0.0.0.0 --port ${PORT:-8001}
