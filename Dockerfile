@@ -1,4 +1,4 @@
-# Dockerfile super simples para Railway  
+# Dockerfile corrigido para Railway  
 FROM python:3.11-slim
 
 WORKDIR /app
@@ -13,8 +13,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copiar código
 COPY backend/ .
 
-# Debug - listar arquivos
-RUN ls -la
-
-# Comando com debug primeiro
-CMD python debug.py && uvicorn server:app --host 0.0.0.0 --port $PORT --log-level debug
+# Usar porta fixa que funciona com $PORT do Railway
+CMD ["sh", "-c", "uvicorn server:app --host 0.0.0.0 --port $PORT --log-level info"]
