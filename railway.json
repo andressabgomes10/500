@@ -4,7 +4,8 @@
     "builder": "dockerfile"
   },
   "deploy": {
-    "startCommand": "uvicorn server:app --host 0.0.0.0 --port $PORT --log-level info",
-    "restartPolicyType": "on-failure"
+    "healthcheckPath": "/api/",
+    "healthcheckTimeout": 300,
+    "restartPolicyType": "always"
   }
 }
