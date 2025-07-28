@@ -1,19 +1,6 @@
-# Railway Multi-Service Configuration
+# Railway Configuration for Monorepo
 [build]
 builder = "dockerfile"
 
 [deploy]
-startCommand = "echo 'Multi-service app configured'"
-
-# Definir cada serviço separadamente  
-[services.backend]
-source = "backend/"
-build.dockerfile = "backend/Dockerfile"
-
-[services.whatsapp]
-source = "whatsapp-service/"
-build.dockerfile = "whatsapp-service/Dockerfile"
-
-[services.frontend]
-source = "frontend/"
-build.dockerfile = "frontend/Dockerfile"
+startCommand = "echo 'Deploy configured'"
