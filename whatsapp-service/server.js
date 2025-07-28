@@ -8,7 +8,7 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
-const FASTAPI_URL = process.env.FASTAPI_URL || 'http://localhost:8001'
+const FASTAPI_URL = process.env.FASTAPI_URL || 'https://500-production-642e.up.railway.app'
 
 let sock = null
 let qrCode = null
