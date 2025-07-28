@@ -79,6 +79,21 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+# Add startup event for debugging
+@app.on_event("startup")
+async def startup_event():
+    logger.info("🚀 CRM Backend starting...")
+    logger.info(f"🗄️ MongoDB URL: {mongo_url[:50]}...")
+    logger.info(f"📊 Database: {db.name}")
+    
+    # Test MongoDB connection
+    try:
+        await db.command("ping")
+        logger.info("✅ MongoDB connected successfully!")
+    except Exception as e:
+        logger.error(f"❌ MongoDB connection failed: {e}")
+
 @app.on_event("shutdown")
 async def shutdown_db_client():
+    logger.info("🛑 Shutting down...")
     client.close()
