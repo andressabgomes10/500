@@ -6,7 +6,13 @@ import { componentTagger } from "lovable-tagger";
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
   build: {
-    outDir: 'build'
+    outDir: 'dist',  // Vercel espera 'dist' para Vite
+    sourcemap: false,
+    rollupOptions: {
+      output: {
+        manualChunks: undefined,
+      },
+    },
   },
 
   // Server configuration
