@@ -22,13 +22,13 @@ const AtendimentoSection = () => {
             <p className="text-sm text-gray-600 mt-1">Gestão completa dos atendimentos ao cliente</p>
           </div>
           <div className="flex items-center space-x-4">
-            <div className="flex items-center space-x-2 bg-green-50 px-3 py-1 rounded-full">
-              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-              <span className="text-sm text-green-700 font-medium">8 agentes online</span>
+            <div className="flex items-center space-x-2 bg-gray-50 px-3 py-1 rounded-full">
+              <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
+              <span className="text-sm text-gray-700 font-medium">0 agentes online</span>
             </div>
-            <div className="flex items-center space-x-2 bg-blue-50 px-3 py-1 rounded-full">
-              <MessageSquare className="h-4 w-4 text-blue-600" />
-              <span className="text-sm text-blue-700 font-medium">12 atendimentos ativos</span>
+            <div className="flex items-center space-x-2 bg-gray-50 px-3 py-1 rounded-full">
+              <MessageSquare className="h-4 w-4 text-gray-600" />
+              <span className="text-sm text-gray-700 font-medium">0 atendimentos ativos</span>
             </div>
           </div>
         </div>
