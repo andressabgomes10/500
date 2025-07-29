@@ -163,6 +163,13 @@ const WhatsAppSection = () => {
 
   return (
     <div className="space-y-6">
+      {/* Debug Info - Remover em produção */}
+      {process.env.NODE_ENV === 'development' && (
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 text-sm">
+          <strong>Debug:</strong> Backend URL: <code>{backendUrl}</code>
+        </div>
+      )}
+      
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
