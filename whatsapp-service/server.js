@@ -97,6 +97,11 @@ async function handleIncomingMessage(message) {
             message: messageText,
             message_id: message.key.id,
             timestamp: message.messageTimestamp || Math.floor(Date.now() / 1000)
+        }, {
+            timeout: 10000, // 10 segundos timeout
+            headers: {
+                'Content-Type': 'application/json'
+            }
         })
 
         // Enviar resposta de volta para WhatsApp se FastAPI retornar uma
