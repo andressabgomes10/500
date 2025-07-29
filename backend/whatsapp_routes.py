@@ -15,8 +15,8 @@ from models import (
 
 router = APIRouter(prefix="/api/whatsapp", tags=["whatsapp"])
 
-# URL do serviço WhatsApp (Node.js)
-WHATSAPP_SERVICE_URL = "http://localhost:3001"
+# URL do serviço WhatsApp (Node.js) - configura automaticamente para ambiente
+WHATSAPP_SERVICE_URL = os.environ.get("WHATSAPP_SERVICE_URL", "http://localhost:3001")
 
 # Função para obter conexão do banco
 def get_db_connection():
