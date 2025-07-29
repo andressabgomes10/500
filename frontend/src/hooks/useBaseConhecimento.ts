@@ -23,75 +23,14 @@ export interface Categoria {
 }
 
 const categoriasIniciais: Categoria[] = [
-  { id: 'produtos', nome: 'Produtos', cor: 'bg-blue-100 text-blue-700', artigos: 8, descricao: 'Informações sobre produtos e serviços' },
-  { id: 'pagamento', nome: 'Pagamento', cor: 'bg-green-100 text-green-700', artigos: 5, descricao: 'Métodos de pagamento e faturamento' },
-  { id: 'entrega', nome: 'Entrega', cor: 'bg-orange-100 text-orange-700', artigos: 6, descricao: 'Envio e logística' },
-  { id: 'tecnico', nome: 'Suporte Técnico', cor: 'bg-purple-100 text-purple-700', artigos: 4, descricao: 'Problemas técnicos e soluções' },
-  { id: 'conta', nome: 'Conta do Cliente', cor: 'bg-pink-100 text-pink-700', artigos: 3, descricao: 'Gerenciamento de conta' },
+  { id: 'produtos', nome: 'Produtos', cor: 'bg-blue-100 text-blue-700', artigos: 0, descricao: 'Informações sobre produtos e serviços' },
+  { id: 'pagamento', nome: 'Pagamento', cor: 'bg-green-100 text-green-700', artigos: 0, descricao: 'Métodos de pagamento e faturamento' },
+  { id: 'entrega', nome: 'Entrega', cor: 'bg-orange-100 text-orange-700', artigos: 0, descricao: 'Envio e logística' },
+  { id: 'tecnico', nome: 'Suporte Técnico', cor: 'bg-purple-100 text-purple-700', artigos: 0, descricao: 'Problemas técnicos e soluções' },
+  { id: 'conta', nome: 'Conta do Cliente', cor: 'bg-pink-100 text-pink-700', artigos: 0, descricao: 'Gerenciamento de conta' },
 ];
 
-const artigosIniciais: Artigo[] = [
-  {
-    id: 1,
-    titulo: 'Como rastrear meu pedido',
-    categoria: 'entrega',
-    visualizacoes: 1250,
-    avaliacao: 4.8,
-    dataAtualizacao: '2024-01-15',
-    conteudo: 'Para rastrear seu pedido, acesse sua conta e clique em "Meus Pedidos". Você encontrará todas as informações de entrega e o código de rastreamento dos Correios.',
-    tags: ['rastreamento', 'pedido', 'entrega'],
-    autor: 'Equipe de Suporte',
-    status: 'publicado'
-  },
-  {
-    id: 2,
-    titulo: 'Política de devolução',
-    categoria: 'produtos',
-    visualizacoes: 890,
-    avaliacao: 4.6,
-    dataAtualizacao: '2024-01-10',
-    conteudo: 'Nossa política de devolução permite retornos em até 30 dias após a compra. O produto deve estar em perfeitas condições, com embalagem original.',
-    tags: ['devolução', 'política', 'garantia'],
-    autor: 'Equipe Jurídica',
-    status: 'publicado'
-  },
-  {
-    id: 3,
-    titulo: 'Métodos de pagamento aceitos',
-    categoria: 'pagamento',
-    visualizacoes: 2100,
-    avaliacao: 4.9,
-    dataAtualizacao: '2024-01-20',
-    conteudo: 'Aceitamos cartões de crédito (Visa, Mastercard, Elo), cartão de débito, PIX (instantâneo) e boleto bancário (vencimento em 3 dias úteis).',
-    tags: ['pagamento', 'cartão', 'pix', 'boleto'],
-    autor: 'Equipe Financeira',
-    status: 'publicado'
-  },
-  {
-    id: 4,
-    titulo: 'Como alterar dados da conta',
-    categoria: 'conta',
-    visualizacoes: 650,
-    avaliacao: 4.5,
-    dataAtualizacao: '2024-01-12',
-    conteudo: 'Para alterar seus dados, acesse Minha Conta > Dados Pessoais. Você pode atualizar nome, email, telefone e endereço. Algumas alterações podem requerer verificação.',
-    tags: ['conta', 'dados', 'perfil'],
-    autor: 'Equipe de Suporte',
-    status: 'publicado'
-  },
-  {
-    id: 5,
-    titulo: 'Problemas com login',
-    categoria: 'tecnico',
-    visualizacoes: 780,
-    avaliacao: 4.3,
-    dataAtualizacao: '2024-01-18',
-    conteudo: 'Se você está tendo problemas para fazer login, tente: 1) Verificar email e senha, 2) Limpar cache do navegador, 3) Redefinir sua senha pelo "Esqueci minha senha".',
-    tags: ['login', 'senha', 'acesso'],
-    autor: 'Equipe Técnica',
-    status: 'publicado'
-  },
-];
+const artigosIniciais: Artigo[] = []; // Sistema limpo - sem dados mockados
 
 export const useBaseConhecimento = () => {
   const [artigos, setArtigos] = useState<Artigo[]>(artigosIniciais);
