@@ -1,73 +1,116 @@
-# Welcome to your Lovable project
+# CRM WhatsApp - Sistema de Atendimento
 
-## Project info
+## Sobre o Projeto
 
-**URL**: https://lovable.dev/projects/3c9a2747-2e5b-4e0c-8aa4-24863faaf914
+Sistema completo de CRM integrado com WhatsApp para gerenciamento de atendimento ao cliente, tickets, e automação de mensagens.
 
-## How can I edit this code?
+## Funcionalidades
 
-There are several ways of editing your application.
+- 📱 **Integração WhatsApp**: Conexão direta com WhatsApp Business
+- 🎫 **Sistema de Tickets**: Gerenciamento completo de atendimentos
+- 👥 **CRM de Clientes**: Cadastro e histórico de clientes
+- 🤖 **Chatbot Automático**: Respostas automáticas e comandos
+- 📊 **Dashboard**: Relatórios e estatísticas em tempo real
+- 🔐 **Multi-perfil**: Sistema de login para diferentes usuários
+- 📈 **Relatórios**: Análises e métricas de atendimento
 
-**Use Lovable**
+## Tecnologias Utilizadas
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/3c9a2747-2e5b-4e0c-8aa4-24863faaf914) and start prompting.
+- **Frontend**: React + TypeScript + Vite
+- **Backend**: FastAPI + Python
+- **WhatsApp**: Baileys (WhatsApp Web API)
+- **UI**: shadcn/ui + Tailwind CSS
+- **Banco**: MongoDB
+- **Deploy**: Railway + Vercel
 
-Changes made via Lovable will be committed automatically to this repo.
+## Como Executar Localmente
 
-**Use your preferred IDE**
+### Pré-requisitos
+- Node.js 18+
+- Python 3.9+
+- MongoDB
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Instalação
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+```bash
+# 1. Clone o repositório
+git clone <URL_DO_REPOSITORIO>
 
-Follow these steps:
+# 2. Instale as dependências do frontend
+cd frontend
+yarn install
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+# 3. Instale as dependências do backend
+cd ../backend
+pip install -r requirements.txt
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+# 4. Instale as dependências do WhatsApp service
+cd ../whatsapp-service
+yarn install
 ```
 
-**Edit a file directly in GitHub**
+### Executando os Serviços
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```bash
+# Terminal 1 - Backend
+cd backend
+python3 -m uvicorn server:app --host 0.0.0.0 --port 8001
 
-**Use GitHub Codespaces**
+# Terminal 2 - WhatsApp Service
+cd whatsapp-service
+yarn start
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+# Terminal 3 - Frontend
+cd frontend
+yarn dev
+```
 
-## What technologies are used for this project?
+### Acessos
+- **Frontend**: http://localhost:3000
+- **Backend API**: http://localhost:8001
+- **WhatsApp Service**: http://localhost:3001
 
-This project is built with:
+## Configuração do WhatsApp
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+1. Acesse http://localhost:3000
+2. Vá para a seção "WhatsApp Business"
+3. Escaneie o QR Code com seu WhatsApp
+4. O sistema estará pronto para receber e enviar mensagens
 
-## How can I deploy this project?
+## Deploy em Produção
 
-Simply open [Lovable](https://lovable.dev/projects/3c9a2747-2e5b-4e0c-8aa4-24863faaf914) and click on Share -> Publish.
+### Railway (Backend + WhatsApp Service)
+```bash
+# Deploy do backend
+railway up --service backend
 
-## Can I connect a custom domain to my Lovable project?
+# Deploy do WhatsApp service
+cd whatsapp-service
+railway up --service whatsapp
+```
 
-Yes, you can!
+### Vercel (Frontend)
+```bash
+vercel --prod
+```
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## Estrutura do Projeto
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+```
+├── frontend/          # Interface React
+├── backend/           # API FastAPI
+├── whatsapp-service/  # Serviço WhatsApp
+└── docs/             # Documentação
+```
+
+## Contribuição
+
+1. Faça um fork do projeto
+2. Crie uma branch para sua feature
+3. Commit suas mudanças
+4. Push para a branch
+5. Abra um Pull Request
+
+## Licença
+
+MIT License
