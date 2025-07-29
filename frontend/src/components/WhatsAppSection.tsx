@@ -224,7 +224,17 @@ const WhatsAppSection = () => {
               <AlertDescription>
                 <strong>Erro de conexão!</strong>
                 <br />
-                Verifique se o serviço WhatsApp está rodando e tente novamente.
+                Não foi possível conectar com o serviço WhatsApp.
+                <br />
+                <small className="text-muted-foreground mt-2 block">
+                  Backend URL: <code>{backendUrl}</code>
+                  {whatsappStatus.error && (
+                    <>
+                      <br />
+                      Erro: {whatsappStatus.error}
+                    </>
+                  )}
+                </small>
               </AlertDescription>
             </Alert>
           ) : qrCode ? (
