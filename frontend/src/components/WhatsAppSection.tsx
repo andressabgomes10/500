@@ -96,11 +96,23 @@ const WhatsAppSection = () => {
 
   const fetchQRCode = async () => {
     try {
-      const response = await fetch(`${backendUrl}/api/whatsapp/qr`);
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000);
+      
+      const response = await fetch(`${backendUrl}/api/whatsapp/qr`, {
+        signal: controller.signal
+      });
+      
+      clearTimeout(timeoutId);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
       const data = await response.json();
       setQrCode(data.qr);
     } catch (error) {
       console.error('Erro ao buscar QR code:', error);
+      setQrCode(null);
     }
   };
 
