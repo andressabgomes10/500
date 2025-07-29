@@ -32,7 +32,13 @@ const WhatsAppSection = () => {
   const [customers, setCustomers] = useState([]);
   const [manualMessage, setManualMessage] = useState({ phone: '', message: '' });
 
-  const backendUrl = import.meta.env.VITE_REACT_APP_BACKEND_URL || import.meta.env.REACT_APP_BACKEND_URL || "http://localhost:8001";
+  // Multiple environment variable options for different deployment platforms
+  const backendUrl = 
+    import.meta.env.VITE_REACT_APP_BACKEND_URL ||     // Vite format
+    import.meta.env.REACT_APP_BACKEND_URL ||          // Create React App format  
+    import.meta.env.VITE_BACKEND_URL ||               // Alternative Vite format
+    process.env.REACT_APP_BACKEND_URL ||              // Process env fallback
+    "http://localhost:8001";                          // Development fallback
 
   // Verificar status e QR code
   useEffect(() => {
