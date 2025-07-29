@@ -1,157 +1,196 @@
-
-import React from 'react';
+import React, { useState } from 'react';
+import { Settings, Users, Shield, Database, Bell, Key } from 'lucide-react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Shield, Settings } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { SectionHeader } from '@/components/shared/SectionHeader';
 
 const AdministracaoSection = () => {
-  return (
-    <div className="p-8">
-      <div className="mb-6">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">🔐 Administração</h1>
-        <p className="text-gray-600">Configurações de sistema e controle de acesso</p>
-      </div>
+  const [activeTab, setActiveTab] = useState('usuarios');
 
-      <Tabs defaultValue="perfis" className="w-full">
-        <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="perfis" className="flex items-center gap-2">
-            <Shield className="h-4 w-4" />
-            Perfis de Acesso
-          </TabsTrigger>
+  return (
+    <div className="space-y-6">
+      <SectionHeader
+        title="Administração do Sistema"
+        subtitle="Gerencie usuários, permissões e configurações do sistema"
+        icon={Settings}
+      />
+
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+        <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="usuarios" className="flex items-center gap-2">
-            <Settings className="h-4 w-4" />
-            Configurações de Usuário
+            <Users className="h-4 w-4" />
+            Usuários
+          </TabsTrigger>
+          <TabsTrigger value="permissoes" className="flex items-center gap-2">
+            <Shield className="h-4 w-4" />
+            Permissões
+          </TabsTrigger>
+          <TabsTrigger value="sistema" className="flex items-center gap-2">
+            <Database className="h-4 w-4" />
+            Sistema
+          </TabsTrigger>
+          <TabsTrigger value="notificacoes" className="flex items-center gap-2">
+            <Bell className="h-4 w-4" />
+            Notificações
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="perfis" className="mt-6">
-          <div className="bg-white rounded-lg border p-6">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-semibold">Perfis de Acesso</h2>
-              <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
-                Novo Perfil
-              </button>
-            </div>
+        <TabsContent value="usuarios" className="mt-6">
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between">
+              <div>
+                <CardTitle>Gerenciamento de Usuários</CardTitle>
+                <CardDescription>Adicione, edite ou remova usuários do sistema</CardDescription>
+              </div>
+              <Button>Novo Usuário</Button>
+            </CardHeader>
+            <CardContent>
+              <div className="text-center py-8 text-gray-500">
+                <Users className="h-8 w-8 mx-auto mb-2 opacity-50" />
+                <p>Nenhum usuário cadastrado</p>
+                <p className="text-sm">Clique em "Novo Usuário" para começar</p>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {[
-                { 
-                  nome: 'Administrador', 
-                  usuarios: 2, 
-                  permissoes: ['Acesso total', 'Gerenciar usuários', 'Relatórios avançados', 'Configurações do sistema'],
-                  cor: 'red'
-                },
-                { 
-                  nome: 'Supervisor', 
-                  usuarios: 3, 
-                  permissoes: ['Gerenciar equipe', 'Visualizar relatórios', 'Atribuir chamados', 'Monitoramento'],
-                  cor: 'blue'
-                },
-                { 
-                  nome: 'Operador', 
-                  usuarios: 12, 
-                  permissoes: ['Atender chamados', 'Visualizar fila', 'Atualizar status', 'Chat básico'],
-                  cor: 'green'
-                }
-              ].map((perfil, i) => (
-                <div key={i} className="border rounded-lg p-4">
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="flex items-center space-x-2">
-                      <div className={`w-3 h-3 rounded-full bg-${perfil.cor}-500`}></div>
-                      <h3 className="font-medium">{perfil.nome}</h3>
+        <TabsContent value="permissoes" className="mt-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Shield className="h-5 w-5" />
+                  Perfis de Acesso
+                </CardTitle>
+                <CardDescription>Configure níveis de acesso por perfil</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="p-4 border rounded-lg">
+                    <div className="flex justify-between items-center mb-2">
+                      <h4 className="font-semibold">Administrador</h4>
+                      <Badge variant="outline">Acesso Total</Badge>
                     </div>
-                    <span className="text-sm text-gray-500">{perfil.usuarios} usuários</span>
+                    <p className="text-sm text-gray-600">Acesso completo a todas as funcionalidades</p>
                   </div>
-                  
-                  <div className="space-y-2">
-                    <p className="text-sm text-gray-600">Permissões:</p>
-                    <div className="space-y-1">
-                      {perfil.permissoes.map((perm, j) => (
-                        <div key={j} className="flex items-center space-x-2">
-                          <div className="w-1.5 h-1.5 bg-gray-400 rounded-full"></div>
-                          <span className="text-xs text-gray-700">{perm}</span>
-                        </div>
-                      ))}
+                  <div className="p-4 border rounded-lg">
+                    <div className="flex justify-between items-center mb-2">
+                      <h4 className="font-semibold">Supervisor</h4>
+                      <Badge variant="outline">Acesso Parcial</Badge>
                     </div>
+                    <p className="text-sm text-gray-600">Supervisão de equipe e relatórios</p>
                   </div>
-                  
-                  <div className="mt-4 flex space-x-2">
-                    <button className="flex-1 px-3 py-1 border border-gray-300 rounded text-xs hover:bg-gray-50">
-                      Editar
-                    </button>
-                    <button className="flex-1 px-3 py-1 bg-blue-600 text-white rounded text-xs hover:bg-blue-700">
-                      Gerenciar
-                    </button>
+                  <div className="p-4 border rounded-lg">
+                    <div className="flex justify-between items-center mb-2">
+                      <h4 className="font-semibold">Operador</h4>
+                      <Badge variant="outline">Acesso Básico</Badge>
+                    </div>
+                    <p className="text-sm text-gray-600">Atendimento ao cliente</p>
                   </div>
                 </div>
-              ))}
-            </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Key className="h-5 w-5" />
+                  Módulos do Sistema
+                </CardTitle>
+                <CardDescription>Controle de acesso por módulo</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center">
+                    <span>Dashboard</span>
+                    <Badge variant="secondary">Todos</Badge>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span>WhatsApp Business</span>
+                    <Badge variant="secondary">Todos</Badge>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span>Relatórios</span>
+                    <Badge variant="outline">Admin/Supervisor</Badge>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span>Administração</span>
+                    <Badge variant="outline">Admin</Badge>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </TabsContent>
 
-        <TabsContent value="usuarios" className="mt-6">
-          <div className="bg-white rounded-lg border p-6">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-semibold">Configurações de Usuário</h2>
-              <button className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
-                Adicionar Usuário
-              </button>
-            </div>
-
-            <div className="space-y-4">
-              {[
-                { nome: 'Ana Costa', email: 'ana.costa@starprint.com', perfil: 'Supervisor', status: 'Ativo', ultimo: '20/06/2025 14:30' },
-                { nome: 'Carlos Lima', email: 'carlos.lima@starprint.com', perfil: 'Operador', status: 'Ativo', ultimo: '20/06/2025 14:25' },
-                { nome: 'Maria Santos', email: 'maria.santos@starprint.com', perfil: 'Operador', status: 'Ativo', ultimo: '20/06/2025 14:20' },
-                { nome: 'Pedro Oliveira', email: 'pedro.oliveira@starprint.com', perfil: 'Operador', status: 'Inativo', ultimo: '19/06/2025 18:00' },
-                { nome: 'Julia Ferreira', email: 'julia.ferreira@starprint.com', perfil: 'Administrador', status: 'Ativo', ultimo: '20/06/2025 14:35' }
-              ].map((usuario, i) => (
-                <div key={i} className="border rounded-lg p-4 hover:bg-gray-50">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-4">
-                      <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                        <span className="text-sm font-medium text-blue-700">
-                          {usuario.nome.split(' ').map(n => n[0]).join('')}
-                        </span>
-                      </div>
-                      <div>
-                        <h3 className="font-medium">{usuario.nome}</h3>
-                        <p className="text-sm text-gray-600">{usuario.email}</p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-center space-x-4">
-                      <div className="text-right">
-                        <div className="flex items-center space-x-2">
-                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                            usuario.status === 'Ativo' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
-                          }`}>
-                            {usuario.status}
-                          </span>
-                          <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">
-                            {usuario.perfil}
-                          </span>
-                        </div>
-                        <p className="text-xs text-gray-500 mt-1">Último acesso: {usuario.ultimo}</p>
-                      </div>
-                      
-                      <div className="flex space-x-2">
-                        <button className="px-3 py-1 border border-gray-300 rounded text-sm hover:bg-gray-50">
-                          Editar
-                        </button>
-                        <button className={`px-3 py-1 rounded text-sm ${
-                          usuario.status === 'Ativo' 
-                            ? 'bg-red-600 text-white hover:bg-red-700' 
-                            : 'bg-green-600 text-white hover:bg-green-700'
-                        }`}>
-                          {usuario.status === 'Ativo' ? 'Desativar' : 'Ativar'}
-                        </button>
-                      </div>
-                    </div>
-                  </div>
+        <TabsContent value="sistema" className="mt-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Configurações Gerais</CardTitle>
+                <CardDescription>Configurações básicas do sistema</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex justify-between items-center">
+                  <span>Nome da Empresa</span>
+                  <span className="font-semibold">StarPrint Etiquetas</span>
                 </div>
-              ))}
-            </div>
+                <div className="flex justify-between items-center">
+                  <span>Versão do Sistema</span>
+                  <Badge variant="outline">v2.0</Badge>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span>Status do Banco</span>
+                  <Badge variant="outline" className="bg-green-50 text-green-700">Online</Badge>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span>WhatsApp Service</span>
+                  <Badge variant="outline" className="bg-green-50 text-green-700">Conectado</Badge>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Backup e Segurança</CardTitle>
+                <CardDescription>Configurações de backup e segurança</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex justify-between items-center">
+                  <span>Último Backup</span>
+                  <span className="text-sm text-gray-600">Nunca</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span>Backup Automático</span>
+                  <Badge variant="outline" className="bg-yellow-50 text-yellow-700">Desabilitado</Badge>
+                </div>
+                <Button variant="outline" className="w-full">
+                  Fazer Backup Agora
+                </Button>
+              </CardContent>
+            </Card>
           </div>
+        </TabsContent>
+
+        <TabsContent value="notificacoes" className="mt-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Bell className="h-5 w-5" />
+                Central de Notificações
+              </CardTitle>
+              <CardDescription>Configure alertas e notificações do sistema</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="text-center py-8 text-gray-500">
+                <Bell className="h-8 w-8 mx-auto mb-2 opacity-50" />
+                <p>Nenhuma notificação configurada</p>
+                <p className="text-sm">Configure alertas para eventos importantes</p>
+              </div>
+            </CardContent>
+          </Card>
         </TabsContent>
       </Tabs>
     </div>
