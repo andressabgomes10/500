@@ -91,7 +91,8 @@ logger = logging.getLogger(__name__)
 async def startup_event():
     logger.info("🚀 CRM Backend starting...")
     logger.info(f"🗄️ MongoDB URL: {mongo_url[:50]}...")
-    logger.info(f"📊 Database: {db.name}")
+    logger.info(f"📊 Database: {db_name}")
+    logger.info(f"🔗 WhatsApp Service URL: {os.environ.get('WHATSAPP_SERVICE_URL', 'Not configured')}")
     
     # Test MongoDB connection
     try:
