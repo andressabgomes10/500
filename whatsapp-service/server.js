@@ -9,7 +9,12 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
-const FASTAPI_URL = process.env.FASTAPI_URL || 'https://500-production-642e.up.railway.app'
+// FastAPI URL - usando Railway private domain em produção, localhost em dev
+const FASTAPI_URL = process.env.FASTAPI_URL || 'http://localhost:8001'
+const PORT = process.env.PORT || 3001
+
+console.log('🔗 FastAPI URL configured:', FASTAPI_URL)
+console.log('🚀 WhatsApp Service will run on port:', PORT)
 
 let sock = null
 let qrCode = null
