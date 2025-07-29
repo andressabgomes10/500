@@ -8,7 +8,6 @@ import {
   CheckCircle,
   Clock,
   ArrowRight,
-  Target,
   Activity,
   Phone,
   Settings
@@ -25,7 +24,6 @@ const Dashboard = () => {
   // Sistema limpo - sem dados mockados
   const atendimentosData = [];
   const canaisData = [];
-  const metasData = [];
 
   const chartConfig = {
     atendimentos: {
@@ -101,7 +99,7 @@ const Dashboard = () => {
             subtitle="Sem avaliações ainda"
             trend="up"
             trendValue=""
-            icon={Target}
+            icon={CheckCircle}
             description="Nota média de satisfação"
             alert=""
           />
@@ -204,23 +202,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Seção de Metas */}
-        <Card className="border border-gray-100/50 shadow-sm hover:shadow-lg transition-all duration-300">
-          <CardHeader>
-            <CardTitle className="text-xl font-bold text-gray-900 flex items-center">
-              <Target className="h-6 w-6 mr-3 text-purple-600" />
-              Metas por Equipe
-            </CardTitle>
-            <CardDescription className="text-base text-gray-600">Performance atual vs metas estabelecidas</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="text-center py-8 text-gray-500">
-              <Target className="h-8 w-8 mx-auto mb-2 opacity-50" />
-              <p>Nenhuma meta configurada</p>
-              <p className="text-sm">Configure metas para suas equipes</p>
-            </div>
-          </CardContent>
-        </Card>
+
 
         {/* Ações Rápidas Redesenhadas */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -243,7 +225,7 @@ const Dashboard = () => {
             },
             {
               title: 'Configurações',
-              description: 'Ajuste metas e parâmetros do sistema',
+              description: 'Ajuste parâmetros do sistema',
               icon: Settings,
               color: 'purple',
               action: 'Configurar',

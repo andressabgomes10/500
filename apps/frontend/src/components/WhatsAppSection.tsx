@@ -30,6 +30,8 @@ const WhatsAppSection = () => {
   const [loading, setLoading] = useState(false);
   const [tickets, setTickets] = useState([]);
   const [customers, setCustomers] = useState([]);
+  const [messages, setMessages] = useState([]);
+  const [selectedCustomer, setSelectedCustomer] = useState('');
   const [manualMessage, setManualMessage] = useState({ phone: '', message: '' });
 
   // Multiple environment variable options for different deployment platforms
@@ -139,6 +141,18 @@ const WhatsAppSection = () => {
       setCustomers(data);
     } catch (error) {
       console.error('Erro ao buscar clientes:', error);
+    }
+  };
+
+  const fetchMessages = async (phoneNumber) => {
+    try {
+      const response = await fetch(`${backendUrl}/api/whatsapp/messages?phone_number=${phoneNumber}`);
+      if (response.ok) {
+        const data = await response.json();
+        setMessages(data.messages || []);
+      }
+    } catch (error) {
+      console.error('Erro ao buscar mensagens:', error);
     }
   };
 
@@ -316,9 +330,10 @@ const WhatsAppSection = () => {
 
       {/* Tabs para diferentes seções */}
       <Tabs defaultValue="tickets" className="space-y-4">
-        <TabsList className="grid w-full grid-cols-3">
+        <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="tickets">Tickets de Suporte</TabsTrigger>
           <TabsTrigger value="customers">Clientes</TabsTrigger>
+          <TabsTrigger value="messages">Mensagens</TabsTrigger>
           <TabsTrigger value="send">Enviar Mensagem</TabsTrigger>
         </TabsList>
 
@@ -406,6 +421,77 @@ const WhatsAppSection = () => {
                       </div>
                     </div>
                   ))}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* Mensagens */}
+        <TabsContent value="messages" className="space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center">
+                <MessageSquare className="w-5 h-5 mr-2" />
+                Mensagens WhatsApp
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div>
+                <label className="text-sm font-medium">Selecionar Cliente</label>
+                <select 
+                  className="w-full p-2 border rounded-md"
+                  value={selectedCustomer}
+                  aria-label="Selecionar cliente para visualizar mensagens"
+                  onChange={(e) => {
+                    setSelectedCustomer(e.target.value);
+                    if (e.target.value) {
+                      fetchMessages(e.target.value);
+                    } else {
+                      setMessages([]);
+                    }
+                  }}
+                >
+                  <option value="">Selecione um cliente...</option>
+                  {customers.map((customer) => (
+                    <option key={customer.id} value={customer.phone_number}>
+                      {customer.name || customer.phone_number} ({customer.phone_number})
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {selectedCustomer && (
+                <div className="space-y-3">
+                  <h4 className="font-medium">Mensagens de {selectedCustomer}</h4>
+                  {messages.length === 0 ? (
+                    <p className="text-center text-muted-foreground py-8">
+                      Nenhuma mensagem encontrada
+                    </p>
+                  ) : (
+                    <div className="space-y-3 max-h-96 overflow-y-auto">
+                      {messages.map((message) => (
+                        <div 
+                          key={message.id} 
+                          className={`p-3 rounded-lg border ${
+                            message.from_customer 
+                              ? 'bg-blue-50 border-blue-200 ml-8' 
+                              : 'bg-green-50 border-green-200 mr-8'
+                          }`}
+                        >
+                          <div className="flex items-center justify-between mb-1">
+                            <span className="text-xs font-medium">
+                              {message.from_customer ? '👤 Cliente' : '🤖 Bot'}
+                            </span>
+                            <span className="text-xs text-muted-foreground">
+                              {new Date(message.timestamp).toLocaleString('pt-BR')}
+                            </span>
+                          </div>
+                          <p className="text-sm whitespace-pre-wrap">{message.message}</p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               )}
             </CardContent>

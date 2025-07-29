@@ -17,7 +17,6 @@ export const AppHeader = ({ onMenuClick, activeSection }: AppHeaderProps) => {
       dashboard: 'Dashboard',
       equipe: 'Equipe',
       escalas: 'Escalas',
-      metas: 'Metas',
       atendimento: 'Atendimento',
       monitoramento: 'Monitoramento',
       relatorios: 'Relatórios',

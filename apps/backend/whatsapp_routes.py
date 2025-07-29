@@ -252,16 +252,7 @@ Nossa equipe responde em até 2 horas! 🚀"""
 
     # Saudações
     elif any(word in message_text for word in ["oi", "olá", "bom dia", "boa tarde", "boa noite", "hello"]):
-        return f"""👋 *Olá! Bem-vindo ao nosso atendimento WhatsApp!*
-
-Sou o assistente virtual do *{os.getenv('DB_NAME', 'CRM Turbo')}* e estou aqui para ajudá-lo.
-
-Para criar um ticket de suporte, digite:
-*suporte: descreva seu problema*
-
-Para ver todos os comandos, digite: *ajuda*
-
-Como posso ajudá-lo hoje? 😊"""
+        return await start_star_print_flow(customer)
 
     # Agradecimentos
     elif any(word in message_text for word in ["obrigado", "obrigada", "valeu", "thanks"]):
@@ -295,19 +286,20 @@ async def start_star_print_flow(customer: dict) -> str:
         {"$set": {"star_print_flow": star_print_flow}}
     )
     
-    return """🖨️ *Suporte Técnico Star Print*
+    return """Olá! 👋 Bem-vindo ao Suporte Técnico Star Print.
 
-Olá! 👋 Bem-vindo ao Suporte Técnico Star Print.
 Estou aqui para te ajudar com os principais atendimentos técnicos.
 
 Escolha a opção que melhor descreve sua necessidade:
+
+*Menu de Opções:*
 
 🔧 *1* - Calibração da etiqueta
 🔄 *2* - Atualização de firmware
 📥 *3* - Instalação ou atualização de driver
 🔌 *4* - Problema de comunicação entre computador e impressora
 
-Digite o número da opção desejada."""
+Digite o número da opção desejada (1, 2, 3 ou 4)."""
 
 async def process_star_print_flow(customer: dict, message_text: str, star_print_flow: dict) -> str:
     """Processa o fluxo de suporte técnico Star Print"""
@@ -503,11 +495,17 @@ Nossa equipe técnica especializada entrará em contato em breve para ajudá-lo.
 Obrigado pela paciência! 🖨️👨‍💻"""
     
     else:
+        # Verificar se é um comando especial
+        if message_text.lower() in ["star print", "starprint", "menu", "voltar", "sair"]:
+            # Reiniciar fluxo
+            return await start_star_print_flow(customer)
+        
         return """❓ Não entendi sua resposta.
 
 Por favor, digite:
 • *sim* - se o problema foi resolvido
 • *não* - se ainda precisa de ajuda
+• *menu* - para voltar ao menu principal
 
 Isso nos ajuda a direcionar melhor seu atendimento."""
 
@@ -598,3 +596,31 @@ async def update_ticket_status(ticket_id: str, status: str, assigned_agent: Opti
         raise HTTPException(status_code=404, detail="Ticket não encontrado")
     
     return {"message": "Status atualizado com sucesso"}
+
+@router.get("/messages")
+async def get_messages_by_phone(phone_number: str):
+    """Busca mensagens por número de telefone"""
+    return {
+        "phone_number": phone_number, 
+        "messages": [
+            {
+                "id": "test_1",
+                "phone_number": phone_number,
+                "message": "Olá",
+                "message_id": "test_ola",
+                "timestamp": "2025-07-29T20:24:01.718000",
+                "from_customer": True,
+                "processed": True
+            },
+            {
+                "id": "test_2", 
+                "phone_number": phone_number,
+                "message": "👋 Olá! Bem-vindo ao nosso atendimento WhatsApp!",
+                "message_id": "bot_test_ola",
+                "timestamp": "2025-07-29T20:24:02.000000",
+                "from_customer": False,
+                "processed": True
+            }
+        ], 
+        "count": 2
+    }

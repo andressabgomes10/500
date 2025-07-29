@@ -3,7 +3,6 @@ import React from 'react';
 import { 
   Users, 
   Calendar, 
-  Target, 
   MessageSquare, 
   Monitor, 
   FileText, 
@@ -23,7 +22,6 @@ const Sidebar = ({ activeSection, onSectionChange }: SidebarProps) => {
     { id: 'dashboard', label: 'Dashboard', icon: BarChart3, description: 'Visão geral' },
     { id: 'equipe', label: 'Equipe', icon: Users, description: 'Gerenciar equipe' },
     { id: 'escalas', label: 'Escalas e Presenças', icon: Calendar, description: 'Horários e presenças' },
-    { id: 'metas', label: 'Metas e Desempenho', icon: Target, description: 'Acompanhar metas' },
     { id: 'atendimento', label: 'Atendimento ao Cliente', icon: MessageSquare, description: 'Central de atendimento' },
     { id: 'monitoramento', label: 'Monitoramento ao Vivo', icon: Monitor, description: 'Monitorar em tempo real' },
     { id: 'relatorios', label: 'Relatórios e Exportações', icon: FileText, description: 'Dados e relatórios' },

@@ -2,7 +2,6 @@ import { lazy } from 'react';
 import { 
   Users, 
   Calendar, 
-  Target, 
   MessageSquare, 
   Monitor, 
   FileText, 
@@ -17,7 +16,6 @@ import { NavigationItem } from '@/types/navigation';
 const Dashboard = lazy(() => import('@/components/Dashboard'));
 const EquipeSection = lazy(() => import('@/components/EquipeSection'));
 const EscalasSection = lazy(() => import('@/components/EscalasSection'));
-const MetasSection = lazy(() => import('@/components/MetasSection'));
 const AtendimentoSection = lazy(() => import('@/components/AtendimentoSection'));
 const MonitoramentoSection = lazy(() => import('@/components/MonitoramentoSection'));
 const RelatoriosSection = lazy(() => import('@/components/RelatoriosSection'));
@@ -45,13 +43,6 @@ export const navigationItems: NavigationItem[] = [
     icon: Calendar, 
     description: 'Horários e presenças',
     component: EscalasSection
-  },
-  { 
-    id: 'metas', 
-    label: 'Metas e Desempenho', 
-    icon: Target, 
-    description: 'Acompanhar metas',
-    component: MetasSection
   },
   { 
     id: 'atendimento', 
