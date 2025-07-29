@@ -54,7 +54,15 @@ const WhatsAppSection = () => {
 
   const checkWhatsAppStatus = async () => {
     try {
-      const response = await fetch(`${backendUrl}/api/whatsapp/status`);
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 segundos timeout
+      
+      const response = await fetch(`${backendUrl}/api/whatsapp/status`, {
+        signal: controller.signal
+      });
+      
+      clearTimeout(timeoutId);
+      
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
       }
@@ -67,11 +75,21 @@ const WhatsAppSection = () => {
     } catch (error) {
       console.error('Erro ao verificar status:', error);
       console.error('Backend URL:', backendUrl);
+      
+      let errorMessage = 'Erro de conexão';
+      if (error.name === 'AbortError') {
+        errorMessage = 'Timeout - Servidor não respondeu em 10 segundos';
+      } else if (error.message.includes('Failed to fetch')) {
+        errorMessage = 'Não foi possível conectar com o backend (CORS ou URL incorreta)';
+      } else {
+        errorMessage = error.message || 'Erro desconhecido';
+      }
+      
       setWhatsappStatus({ 
         connected: false, 
         status: 'error', 
         user: null,
-        error: error.message || 'Erro de conexão'
+        error: errorMessage
       });
     }
   };
