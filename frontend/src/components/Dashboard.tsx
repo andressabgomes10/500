@@ -70,40 +70,40 @@ const Dashboard = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
           <StatCard
             title="Atendimentos Ativos"
-            value="23"
-            subtitle="12 na fila de espera"
+            value="0"
+            subtitle="Sistema novo - sem dados ainda"
             trend="up"
-            trendValue="+15%"
+            trendValue=""
             icon={MessageSquare}
             description="Atendimentos em tempo real"
           />
           <StatCard
             title="Taxa de Resolução"
-            value="89%"
+            value="0%"
             subtitle="Meta: 85%"
             trend="up"
-            trendValue="+4%"
+            trendValue=""
             icon={CheckCircle}
             description="Tickets resolvidos no primeiro contato"
           />
           <StatCard
             title="Tempo Médio"
-            value="3.2min"
-            subtitle="Último período: 3.8min"
+            value="0min"
+            subtitle="Aguardando dados"
             trend="up"
-            trendValue="-16%"
+            trendValue=""
             icon={Clock}
             description="Tempo médio de atendimento"
           />
           <StatCard
             title="Satisfação"
-            value="4.6"
-            subtitle="Base: 156 avaliações"
+            value="0"
+            subtitle="Sem avaliações ainda"
             trend="up"
-            trendValue="+0.3"
+            trendValue=""
             icon={Target}
             description="Nota média de satisfação"
-            alert="2 avaliações baixas"
+            alert=""
           />
         </div>
 
