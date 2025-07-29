@@ -1,11 +1,59 @@
 {
   "name": "crm-whatsapp-monorepo",
   "version": "1.0.0",
+  "description": "Sistema completo de CRM integrado com WhatsApp para atendimento ao cliente",
   "private": true,
   "license": "MIT",
+  "workspaces": [
+    "apps/*"
+  ],
   "scripts": {
-    "build": "cd frontend && yarn install && yarn build",
-    "install": "cd frontend && yarn install"
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:whatsapp\" \"npm run dev:frontend\"",
+    "dev:frontend": "cd apps/frontend && npm run dev",
+    "dev:backend": "cd apps/backend && python3 -m uvicorn server:app --host 0.0.0.0 --port 8001 --reload",
+    "dev:whatsapp": "cd apps/whatsapp-service && npm start",
+    "build": "npm run build:frontend && npm run build:backend",
+    "build:frontend": "cd apps/frontend && npm run build",
+    "build:backend": "cd apps/backend && echo 'Backend build completed'",
+    "install:all": "npm install && cd apps/frontend && npm install && cd ../whatsapp-service && npm install",
+    "clean": "rm -rf node_modules apps/*/node_modules apps/*/dist apps/*/build",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:build": "docker-compose build",
+    "docker:logs": "docker-compose logs -f",
+    "test": "npm run test:backend && npm run test:frontend",
+    "test:backend": "cd apps/backend && python -m pytest",
+    "test:frontend": "cd apps/frontend && npm run test",
+    "lint": "npm run lint:frontend && npm run lint:backend",
+    "lint:frontend": "cd apps/frontend && npm run lint",
+    "lint:backend": "cd apps/backend && black . && flake8 .",
+    "format": "npm run format:frontend && npm run format:backend",
+    "format:frontend": "cd apps/frontend && npm run lint -- --fix",
+    "format:backend": "cd apps/backend && black . && isort ."
   },
-  "workspaces": ["frontend"]
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/andressabgomes10/500.git"
+  },
+  "keywords": [
+    "crm",
+    "whatsapp",
+    "customer-service",
+    "react",
+    "fastapi",
+    "mongodb",
+    "typescript"
+  ],
+  "author": "CRM WhatsApp Team",
+  "bugs": {
+    "url": "https://github.com/andressabgomes10/500/issues"
+  },
+  "homepage": "https://github.com/andressabgomes10/500#readme"
 }

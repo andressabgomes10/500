@@ -1,0 +1,91 @@
+version: '3.8'
+
+services:
+  # MongoDB Database
+  mongodb:
+    image: mongo:latest
+    container_name: crm-mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password123
+      MONGO_INITDB_DATABASE: crm_production
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - crm-network
+
+  # Backend API
+  backend:
+    build:
+      context: .
+      dockerfile: tools/docker/backend.Dockerfile
+    container_name: crm-backend
+    restart: unless-stopped
+    ports:
+      - "8001:8001"
+    environment:
+      - MONGO_URL=mongodb://admin:password123@mongodb:27017
+      - DB_NAME=crm_production
+      - PORT=8001
+      - WHATSAPP_SERVICE_URL=http://whatsapp-service:3001
+    depends_on:
+      - mongodb
+      - whatsapp-service
+    networks:
+      - crm-network
+    volumes:
+      - ./apps/backend:/app
+      - /app/__pycache__
+
+  # WhatsApp Service
+  whatsapp-service:
+    build:
+      context: .
+      dockerfile: tools/docker/whatsapp.Dockerfile
+    container_name: crm-whatsapp
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    environment:
+      - FASTAPI_URL=http://backend:8001
+      - PORT=3001
+    depends_on:
+      - backend
+    networks:
+      - crm-network
+    volumes:
+      - ./apps/whatsapp-service:/app
+      - whatsapp_auth:/app/auth_info
+
+  # Frontend
+  frontend:
+    build:
+      context: .
+      dockerfile: tools/docker/frontend.Dockerfile
+    container_name: crm-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - VITE_BACKEND_URL=http://localhost:8001
+      - REACT_APP_BACKEND_URL=http://localhost:8001
+    depends_on:
+      - backend
+    networks:
+      - crm-network
+    volumes:
+      - ./apps/frontend:/app
+      - /app/node_modules
+
+volumes:
+  mongodb_data:
+    driver: local
+  whatsapp_auth:
+    driver: local
+
+networks:
+  crm-network:
+    driver: bridge 

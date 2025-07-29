@@ -65,9 +65,43 @@ chainlit.md
 agenthub/agents/youtube/db
 
 # WhatsApp authentication files
-whatsapp-service/auth_info/
+apps/whatsapp-service/auth_info/
 *.session.json
 *.creds.json
+
+# Logs
+*.log
+*.log.*
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# IDE files
+.vscode/
+.idea/
+*.sublime-*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+dist/
+build/
+*.tsbuildinfo
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Cache directories
+.cache/
+.parcel-cache/
+.next/
 
 # Archive files and large assets
 **/*.zip
