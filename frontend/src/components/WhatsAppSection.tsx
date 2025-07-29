@@ -55,6 +55,9 @@ const WhatsAppSection = () => {
   const checkWhatsAppStatus = async () => {
     try {
       const response = await fetch(`${backendUrl}/api/whatsapp/status`);
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
       const data = await response.json();
       setWhatsappStatus(data);
       
@@ -63,7 +66,13 @@ const WhatsAppSection = () => {
       }
     } catch (error) {
       console.error('Erro ao verificar status:', error);
-      setWhatsappStatus({ connected: false, status: 'error', user: null });
+      console.error('Backend URL:', backendUrl);
+      setWhatsappStatus({ 
+        connected: false, 
+        status: 'error', 
+        user: null,
+        error: error.message || 'Erro de conexão'
+      });
     }
   };
 
