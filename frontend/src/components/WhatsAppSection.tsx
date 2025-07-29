@@ -222,18 +222,27 @@ const WhatsAppSection = () => {
             <Alert variant="destructive">
               <AlertCircle className="h-4 w-4" />
               <AlertDescription>
-                <strong>Erro de conexão!</strong>
+                <strong>Erro de conexão com o backend!</strong>
                 <br />
-                Não foi possível conectar com o serviço WhatsApp.
+                O frontend não consegue conectar com o backend.
                 <br />
                 <small className="text-muted-foreground mt-2 block">
                   Backend URL: <code>{backendUrl}</code>
                   {whatsappStatus.error && (
                     <>
                       <br />
-                      Erro: {whatsappStatus.error}
+                      Detalhes: {whatsappStatus.error}
                     </>
                   )}
+                  <br />
+                  <br />
+                  <strong>Solução:</strong>
+                  <br />
+                  1. Verifique se a variável REACT_APP_BACKEND_URL está configurada na Vercel
+                  <br />
+                  2. Confirme se o backend está rodando no Railway
+                  <br />
+                  3. Teste a URL do backend diretamente
                 </small>
               </AlertDescription>
             </Alert>
