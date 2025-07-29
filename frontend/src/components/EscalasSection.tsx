@@ -34,20 +34,14 @@ const EscalasSection = () => {
   const [statusFilter, setStatusFilter] = useState('todos');
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
-  // Mock data - dados simulados
-  const escalas = [
-    { id: 1, operador: 'João Silva', turno: 'Manhã', horario: '08:00-17:00', status: 'presente', setor: 'Vendas' },
-    { id: 2, operador: 'Maria Santos', turno: 'Tarde', horario: '13:00-22:00', status: 'atrasado', setor: 'Atendimento' },
-    { id: 3, operador: 'Pedro Oliveira', turno: 'Manhã', horario: '08:00-17:00', status: 'falta', setor: 'Técnico' },
-    { id: 4, operador: 'Ana Costa', turno: 'Integral', horario: '08:00-18:00', status: 'presente', setor: 'Supervisão' },
-    { id: 5, operador: 'Carlos Lima', turno: 'Noite', horario: '22:00-06:00', status: 'presente', setor: 'Segurança' },
-  ];
+  // Sistema limpo - sem dados mockados
+  const escalas = [];
 
   const estatisticas = {
-    totalOperadores: 25,
-    presentes: 20,
-    atrasos: 3,
-    faltas: 2,
+    totalOperadores: 0,
+    presentes: 0,
+    atrasos: 0,
+    faltas: 0,
     percentualPresenca: 80
   };
 
