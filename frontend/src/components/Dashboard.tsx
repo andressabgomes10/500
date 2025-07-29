@@ -194,36 +194,10 @@ const Dashboard = () => {
                 <CardDescription className="text-gray-600">Status atual da equipe de atendimento</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="space-y-3">
-                  {[
-                    { nome: 'Ana Costa', status: 'Atendendo', canal: 'WhatsApp', tempo: '5:23', avatar: 'AC', statusColor: 'green' },
-                    { nome: 'Carlos Lima', status: 'Disponível', canal: '-', tempo: '-', avatar: 'CL', statusColor: 'blue' },
-                    { nome: 'Maria Santos', status: 'Atendendo', canal: 'Email', tempo: '12:45', avatar: 'MS', statusColor: 'green' },
-                    { nome: 'Pedro Silva', status: 'Pausa', canal: '-', tempo: '3:15', avatar: 'PS', statusColor: 'yellow' }
-                  ].map((pessoa, i) => (
-                    <div key={i} className="flex items-center justify-between p-3 rounded-xl bg-gradient-to-r from-gray-50 to-gray-50/50 hover:from-gray-100 hover:to-gray-100/50 transition-all duration-200 border border-gray-100/50">
-                      <div className="flex items-center space-x-3">
-                        <div className="relative">
-                          <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-white text-sm font-bold shadow-lg">
-                            {pessoa.avatar}
-                          </div>
-                          <div className={`absolute -bottom-1 -right-1 w-4 h-4 rounded-full border-2 border-white ${
-                            pessoa.statusColor === 'green' ? 'bg-emerald-500' :
-                            pessoa.statusColor === 'blue' ? 'bg-blue-500' : 'bg-yellow-500'
-                          }`}></div>
-                        </div>
-                        <div>
-                          <div className="text-sm font-semibold text-gray-900">{pessoa.nome}</div>
-                          <div className="text-xs text-gray-500 flex items-center">
-                            {pessoa.status} {pessoa.canal !== '-' && `• ${pessoa.canal}`}
-                          </div>
-                        </div>
-                      </div>
-                      <div className="text-right text-xs font-medium text-gray-600">
-                        {pessoa.tempo}
-                      </div>
-                    </div>
-                  ))}
+                <div className="text-center py-8 text-gray-500">
+                  <Users className="h-8 w-8 mx-auto mb-2 opacity-50" />
+                  <p>Nenhuma equipe online</p>
+                  <p className="text-sm">Configure sua equipe de atendimento</p>
                 </div>
               </CardContent>
             </Card>
