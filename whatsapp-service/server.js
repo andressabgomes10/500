@@ -202,7 +202,6 @@ process.on('SIGTERM', async () => {
     process.exit(0)
 })
 
-const PORT = process.env.PORT || 3001
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`🚀 Serviço WhatsApp rodando na porta ${PORT}`)
     console.log(`🔗 FastAPI URL: ${FASTAPI_URL}`)
