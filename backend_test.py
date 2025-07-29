@@ -11,7 +11,7 @@ from datetime import datetime
 import uuid
 
 # Configuration
-BACKEND_URL = "https://a0d9a925-a286-4ae4-a2a5-33bfb59c29de.preview.emergentagent.com"
+BACKEND_URL = "https://20d64b1e-8bee-4bde-9087-8fbbfa3058cc.preview.emergentagent.com"
 WHATSAPP_SERVICE_URL = "http://localhost:3001"
 
 class WhatsAppBackendTester:
