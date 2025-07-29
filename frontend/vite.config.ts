@@ -5,6 +5,11 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
+  // Define environment variables that should be exposed to the client
+  define: {
+    'process.env.REACT_APP_BACKEND_URL': JSON.stringify(process.env.REACT_APP_BACKEND_URL || ''),
+  },
+  
   build: {
     outDir: 'dist',  // Vercel espera 'dist' para Vite
     sourcemap: false,
