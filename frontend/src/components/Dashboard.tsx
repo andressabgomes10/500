@@ -214,24 +214,10 @@ const Dashboard = () => {
             <CardDescription className="text-base text-gray-600">Performance atual vs metas estabelecidas</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {metasData.map((item, i) => (
-                <div key={i} className="space-y-4 p-4 rounded-xl bg-gradient-to-r from-gray-50 to-white border border-gray-100/50">
-                  <div className="flex items-center justify-between">
-                    <span className="text-lg font-bold text-gray-900">{item.equipe}</span>
-                    <span className="text-sm font-semibold text-gray-600">{item.atual}% / {item.meta}%</span>
-                  </div>
-                  <Progress value={(item.atual / item.meta) * 100} className="h-3" />
-                  <div className="flex items-center justify-between text-sm">
-                    <span className={item.atual >= item.meta ? 'text-emerald-600 font-semibold' : 'text-orange-600 font-medium'}>
-                      {item.atual >= item.meta ? 'Meta atingida!' : `Faltam ${item.meta - item.atual}%`}
-                    </span>
-                    <span className={`text-lg ${item.atual >= item.meta ? 'text-emerald-600' : 'text-orange-600'}`}>
-                      {item.atual >= item.meta ? '✓' : '!'}
-                    </span>
-                  </div>
-                </div>
-              ))}
+            <div className="text-center py-8 text-gray-500">
+              <Target className="h-8 w-8 mx-auto mb-2 opacity-50" />
+              <p>Nenhuma meta configurada</p>
+              <p className="text-sm">Configure metas para suas equipes</p>
             </div>
           </CardContent>
         </Card>
