@@ -176,31 +176,11 @@ const Dashboard = () => {
                 <CardDescription className="text-gray-600">Distribuição atual por canal</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                {canaisData.map((canal, i) => (
-                  <div key={i} className="group hover:bg-gray-50 p-3 rounded-lg transition-all duration-200">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-3">
-                        <div 
-                          className="w-4 h-4 rounded-full shadow-sm" 
-                          style={{ backgroundColor: canal.cor }}
-                        ></div>
-                        <span className="text-sm font-semibold text-gray-900">{canal.nome}</span>
-                      </div>
-                      <div className="text-right">
-                        <span className="text-lg font-bold text-gray-900">{canal.valor}</span>
-                        <div className="w-24 bg-gray-200 rounded-full h-2.5 mt-1">
-                          <div 
-                            className="h-2.5 rounded-full transition-all duration-500 shadow-sm" 
-                            style={{ 
-                              width: `${canal.valor}%`,
-                              backgroundColor: canal.cor
-                            }}
-                          ></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+                <div className="text-center py-8 text-gray-500">
+                  <Phone className="h-8 w-8 mx-auto mb-2 opacity-50" />
+                  <p>Nenhum canal configurado ainda</p>
+                  <p className="text-sm">Configure seus canais de atendimento</p>
+                </div>
               </CardContent>
             </Card>
 
