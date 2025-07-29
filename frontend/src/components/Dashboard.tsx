@@ -22,28 +22,10 @@ import { StatCard } from '@/components/shared/StatCard';
 import { SectionHeader } from '@/components/shared/SectionHeader';
 
 const Dashboard = () => {
-  // Dados de exemplo para os gráficos
-  const atendimentosData = [
-    { hora: '08:00', atendimentos: 12, satisfacao: 4.2 },
-    { hora: '10:00', atendimentos: 25, satisfacao: 4.5 },
-    { hora: '12:00', atendimentos: 35, satisfacao: 4.3 },
-    { hora: '14:00', atendimentos: 42, satisfacao: 4.7 },
-    { hora: '16:00', atendimentos: 38, satisfacao: 4.4 },
-    { hora: '18:00', atendimentos: 28, satisfacao: 4.6 }
-  ];
-
-  const canaisData = [
-    { nome: 'WhatsApp', valor: 45, cor: '#25D366' },
-    { nome: 'Telefone', valor: 25, cor: '#FF6B35' },
-    { nome: 'Email', valor: 20, cor: '#4285F4' },
-    { nome: 'Chat', valor: 10, cor: '#8B5CF6' }
-  ];
-
-  const metasData = [
-    { equipe: 'Suporte', meta: 90, atual: 87, cor: '#3B82F6' },
-    { equipe: 'Vendas', meta: 85, atual: 92, cor: '#10B981' },
-    { equipe: 'Retenção', meta: 80, atual: 75, cor: '#F59E0B' }
-  ];
+  // Sistema limpo - sem dados mockados
+  const atendimentosData = [];
+  const canaisData = [];
+  const metasData = [];
 
   const chartConfig = {
     atendimentos: {
