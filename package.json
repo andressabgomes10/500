@@ -1,6 +1,8 @@
 {
   "name": "crm-whatsapp-monorepo",
   "version": "1.0.0",
+  "private": true,
+  "license": "MIT",
   "scripts": {
     "build": "cd frontend && yarn install && yarn build",
     "install": "cd frontend && yarn install"
