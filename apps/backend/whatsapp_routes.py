@@ -99,6 +99,14 @@ async def process_customer_command(customer: dict, message_text: str) -> Optiona
     """Processa comandos do cliente via WhatsApp"""
     db = get_db_connection()
     
+    # Verificar se o cliente está em um fluxo de suporte técnico Star Print
+    star_print_flow = customer.get("star_print_flow", {})
+    current_step = star_print_flow.get("current_step")
+    
+    # Se está em um fluxo ativo, processar resposta
+    if current_step and star_print_flow.get("active", False):
+        return await process_star_print_flow(customer, message_text, star_print_flow)
+    
     # Comando para criar ticket: "suporte: problema com sistema"
     if message_text.startswith("suporte:"):
         description = message_text.replace("suporte:", "").strip()
@@ -207,6 +215,10 @@ Nossa equipe analisará seu caso e retornará em breve. Para acompanhar, use: *s
         response += "Para ver detalhes de um ticket, use: *status 12345678*"
         return response
 
+    # Comando para iniciar fluxo Star Print
+    elif message_text.lower() in ["star print", "starprint", "star", "impressora", "etiqueta"]:
+        return await start_star_print_flow(customer)
+    
     # Comando de ajuda: "ajuda", "help", "comandos"
     elif message_text in ["ajuda", "help", "comandos", "?"]:
         return """🤖 *Central de Atendimento WhatsApp*
@@ -222,6 +234,9 @@ Nossa equipe analisará seu caso e retornará em breve. Para acompanhar, use: *s
 🎫 *meus tickets*
    Ver todos os seus tickets
    
+🖨️ *star print*
+   Suporte técnico para impressoras Star Print
+   
 ❓ *ajuda*
    Mostrar esta mensagem
 
@@ -231,6 +246,7 @@ Nossa equipe analisará seu caso e retornará em breve. Para acompanhar, use: *s
 • suporte: não consigo acessar o sistema
 • status 12345678
 • meus tickets
+• star print
 
 Nossa equipe responde em até 2 horas! 🚀"""
 
@@ -260,7 +276,255 @@ Digite *ajuda* para ver os comandos disponíveis.
 *Exemplos rápidos:*
 • *suporte: descrição do problema*
 • *meus tickets*
+• *star print*
 • *ajuda*"""
+
+async def start_star_print_flow(customer: dict) -> str:
+    """Inicia o fluxo de suporte técnico Star Print"""
+    db = get_db_connection()
+    
+    # Atualizar cliente com fluxo ativo
+    star_print_flow = {
+        "active": True,
+        "current_step": "menu",
+        "started_at": datetime.utcnow()
+    }
+    
+    await db.customers.update_one(
+        {"_id": customer["_id"]},
+        {"$set": {"star_print_flow": star_print_flow}}
+    )
+    
+    return """🖨️ *Suporte Técnico Star Print*
+
+Olá! 👋 Bem-vindo ao Suporte Técnico Star Print.
+Estou aqui para te ajudar com os principais atendimentos técnicos.
+
+Escolha a opção que melhor descreve sua necessidade:
+
+🔧 *1* - Calibração da etiqueta
+🔄 *2* - Atualização de firmware
+📥 *3* - Instalação ou atualização de driver
+🔌 *4* - Problema de comunicação entre computador e impressora
+
+Digite o número da opção desejada."""
+
+async def process_star_print_flow(customer: dict, message_text: str, star_print_flow: dict) -> str:
+    """Processa o fluxo de suporte técnico Star Print"""
+    db = get_db_connection()
+    current_step = star_print_flow.get("current_step")
+    
+    # Processar resposta baseada no passo atual
+    if current_step == "menu":
+        return await handle_menu_selection(customer, message_text, star_print_flow)
+    elif current_step == "calibracao":
+        return await handle_calibracao_response(customer, message_text, star_print_flow)
+    elif current_step == "firmware":
+        return await handle_firmware_response(customer, message_text, star_print_flow)
+    elif current_step == "driver":
+        return await handle_driver_response(customer, message_text, star_print_flow)
+    elif current_step == "comunicacao":
+        return await handle_comunicacao_response(customer, message_text, star_print_flow)
+    
+    return "Erro no fluxo. Digite *star print* para reiniciar."
+
+async def handle_menu_selection(customer: dict, message_text: str, star_print_flow: dict) -> str:
+    """Processa seleção do menu principal"""
+    db = get_db_connection()
+    
+    option = message_text.strip()
+    
+    if option == "1":
+        # Calibração da etiqueta
+        star_print_flow["current_step"] = "calibracao"
+        star_print_flow["selected_option"] = "calibracao"
+        
+        await db.customers.update_one(
+            {"_id": customer["_id"]},
+            {"$set": {"star_print_flow": star_print_flow}}
+        )
+        
+        return """🔧 *Calibração da Etiqueta*
+
+Vamos calibrar sua etiqueta.
+
+📌 *Passos sugeridos:*
+1. Desligue a impressora
+2. Pressione e segure o botão de feed
+3. Ligue a impressora mantendo o botão pressionado até iniciar a impressão de calibração
+
+✅ Isso resolveu o problema?
+
+Digite *sim* ou *não*."""
+    
+    elif option == "2":
+        # Atualização de firmware
+        star_print_flow["current_step"] = "firmware"
+        star_print_flow["selected_option"] = "firmware"
+        
+        await db.customers.update_one(
+            {"_id": customer["_id"]},
+            {"$set": {"star_print_flow": star_print_flow}}
+        )
+        
+        return """🔄 *Atualização de Firmware*
+
+Vamos atualizar o firmware da impressora.
+
+📌 *Passos:*
+1. Acesse o site oficial da Star Print
+2. Baixe a versão mais recente do firmware para seu modelo
+3. Siga o manual de instalação exibido no site
+
+✅ Funcionou?
+
+Digite *sim* ou *não*."""
+    
+    elif option == "3":
+        # Instalação/Atualização de Driver
+        star_print_flow["current_step"] = "driver"
+        star_print_flow["selected_option"] = "driver"
+        
+        await db.customers.update_one(
+            {"_id": customer["_id"]},
+            {"$set": {"star_print_flow": star_print_flow}}
+        )
+        
+        return """📥 *Instalação/Atualização de Driver*
+
+Vamos instalar ou atualizar o driver.
+
+📌 *Passos:*
+1. Vá até a página de drivers no site da Star Print
+2. Escolha o modelo e sistema operacional corretos
+3. Baixe e instale o driver atualizado
+
+✅ Funcionou?
+
+Digite *sim* ou *não*."""
+    
+    elif option == "4":
+        # Problema de Comunicação
+        star_print_flow["current_step"] = "comunicacao"
+        star_print_flow["selected_option"] = "comunicacao"
+        
+        await db.customers.update_one(
+            {"_id": customer["_id"]},
+            {"$set": {"star_print_flow": star_print_flow}}
+        )
+        
+        return """🔌 *Problema de Comunicação*
+
+Vamos verificar a comunicação entre computador e impressora.
+
+📌 *Passos:*
+1. Confirme se todos os cabos estão conectados corretamente
+2. Verifique se a impressora está ligada
+3. Certifique-se de que o driver está instalado e atualizado
+
+✅ Funcionou?
+
+Digite *sim* ou *não*."""
+    
+    else:
+        return """❌ Opção inválida.
+
+Escolha uma das opções:
+🔧 *1* - Calibração da etiqueta
+🔄 *2* - Atualização de firmware
+📥 *3* - Instalação ou atualização de driver
+🔌 *4* - Problema de comunicação entre computador e impressora"""
+
+async def handle_calibracao_response(customer: dict, message_text: str, star_print_flow: dict) -> str:
+    """Processa resposta da calibração"""
+    return await handle_generic_response(customer, message_text, star_print_flow, "calibração")
+
+async def handle_firmware_response(customer: dict, message_text: str, star_print_flow: dict) -> str:
+    """Processa resposta do firmware"""
+    return await handle_generic_response(customer, message_text, star_print_flow, "firmware")
+
+async def handle_driver_response(customer: dict, message_text: str, star_print_flow: dict) -> str:
+    """Processa resposta do driver"""
+    return await handle_generic_response(customer, message_text, star_print_flow, "driver")
+
+async def handle_comunicacao_response(customer: dict, message_text: str, star_print_flow: dict) -> str:
+    """Processa resposta da comunicação"""
+    return await handle_generic_response(customer, message_text, star_print_flow, "comunicação")
+
+async def handle_generic_response(customer: dict, message_text: str, star_print_flow: dict, option_name: str) -> str:
+    """Processa resposta genérica para qualquer opção"""
+    db = get_db_connection()
+    
+    response = message_text.lower().strip()
+    
+    if response in ["sim", "s", "yes", "y", "funcionou", "resolvido"]:
+        # Sucesso - encerrar fluxo
+        await end_star_print_flow(customer, star_print_flow, True, option_name)
+        
+        return f"""✅ *Ótimo! Atendimento concluído com sucesso!*
+
+A {option_name} foi resolvida. A Star Print agradece seu contato.
+
+Se precisar de mais ajuda, digite *star print* para iniciar um novo atendimento.
+
+Obrigado por escolher a Star Print! 🖨️✨"""
+    
+    elif response in ["não", "nao", "n", "no", "não funcionou", "nao funcionou", "não resolveu", "nao resolveu"]:
+        # Falha - encaminhar para suporte especializado
+        await end_star_print_flow(customer, star_print_flow, False, option_name)
+        
+        # Criar ticket automaticamente
+        ticket_data = {
+            "id": str(uuid.uuid4()),
+            "customer_phone": customer["phone_number"],
+            "subject": f"Suporte Star Print - {option_name.title()} - Não resolvido",
+            "description": f"Cliente tentou resolver problema de {option_name} via bot, mas não funcionou. Encaminhando para suporte especializado.",
+            "status": "aberto",
+            "priority": "alta",
+            "created_at": datetime.utcnow(),
+            "updated_at": datetime.utcnow(),
+            "messages": [],
+            "category": "star_print",
+            "bot_attempt": True
+        }
+        
+        await db.tickets.insert_one(ticket_data)
+        
+        return f"""🔄 *Encaminhando para suporte especializado*
+
+Entendemos que a {option_name} não foi resolvida.
+
+✅ *Ticket criado automaticamente*
+🎫 *ID:* #{ticket_data['id'][:8]}
+📋 *Categoria:* Star Print - {option_name.title()}
+
+Nossa equipe técnica especializada entrará em contato em breve para ajudá-lo.
+
+Obrigado pela paciência! 🖨️👨‍💻"""
+    
+    else:
+        return """❓ Não entendi sua resposta.
+
+Por favor, digite:
+• *sim* - se o problema foi resolvido
+• *não* - se ainda precisa de ajuda
+
+Isso nos ajuda a direcionar melhor seu atendimento."""
+
+async def end_star_print_flow(customer: dict, star_print_flow: dict, success: bool, option_name: str):
+    """Finaliza o fluxo Star Print"""
+    db = get_db_connection()
+    
+    # Atualizar fluxo como inativo
+    star_print_flow["active"] = False
+    star_print_flow["ended_at"] = datetime.utcnow()
+    star_print_flow["success"] = success
+    star_print_flow["final_option"] = option_name
+    
+    await db.customers.update_one(
+        {"_id": customer["_id"]},
+        {"$set": {"star_print_flow": star_print_flow}}
+    )
 
 @router.post("/send")
 async def send_whatsapp_message(message: WhatsAppOutgoingMessage):
